@@ -35,6 +35,7 @@ export const AppProvider = ({ children }) => {
   const value = {
     userData,
     fetchUserData,
+    user,
     getToken,
     backendUrl: "http://localhost:3000",
   };

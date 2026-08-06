@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { assets } from "../assets/assets";
 import { useClerk, useUser, UserButton } from "@clerk/clerk-react";
 
@@ -38,16 +38,15 @@ const Navbar = () => {
   const { user } = useUser();
 
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     if (location.pathname !== "/") {
       setIsScrolled(true);
       return;
     } else {
-      setIsScrolled(false);
+      setIsScrolled(window.scrollY > 10);
     }
-
-    setIsScrolled((prev) => (location.pathname !== "/" ? true : prev));
 
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10);
@@ -56,7 +55,7 @@ const Navbar = () => {
     window.addEventListener("scroll", handleScroll);
 
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [location.pathname]);
 
   return (
     <nav

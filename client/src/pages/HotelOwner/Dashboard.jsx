@@ -94,7 +94,9 @@ const Dashboard = () => {
             <tbody className="divide-y divide-gray-100">
               {bookings.length > 0 ? bookings.map((item, index) => (
                 <tr key={index} className="hover:bg-gray-50 transition-colors">
-                  <td className="px-6 py-4 text-sm text-gray-700">{item.user}</td>
+                  <td className="px-6 py-4 text-sm text-gray-700">
+                    {typeof item.user === "object" ? (item.user?.name || item.user?._id) : item.user}
+                  </td>
                   <td className="px-6 py-4 text-sm text-gray-700">{item.room?.roomType}</td>
                   <td className="px-6 py-4 text-sm text-gray-900 font-medium">${item.totalPrice}</td>
                   <td className="px-6 py-4">

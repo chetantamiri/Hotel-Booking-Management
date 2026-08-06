@@ -74,6 +74,12 @@ export const toggleRoomAvailability = async (req, res) => {
     if (!room) {
       return res.json({ success: false, message: "Room not found" });
     }
+
+    const hotel = await Hotel.findOne({ owner: req.user._id });
+    if (!hotel || room.hotel.toString() !== hotel._id.toString()) {
+      return res.status(403).json({ success: false, message: "Unauthorized to modify this room" });
+    }
+
     room.isAvailable = !room.isAvailable;
     await room.save();
     res.json({ success: true, message: "Room availability updated", room });
